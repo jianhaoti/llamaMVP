@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PDF Reader + AI</title>
+  </head>
+  <body>
+    <h1>📄 Local PDF Reader + AI</h1>
+    <iframe src="sample.pdf" width="100%" height="500px"></iframe>
+
+    <h2>Ask LLaMA</h2>
+    <input type="text" id="prompt" placeholder="Ask something..." />
+    <button onclick="askLlama()">Send</button>
+    <p><strong>Response:</strong> <span id="response"></span></p>
+
+    <script>
+      async function askLlama() {
+        const prompt = document.getElementById("prompt").value;
+        document.getElementById("response").innerText = "Thinking..."; // Show loading text
+
+        try {
+          // ✅ FIXED: Use `window.electron.invoke`
+          const response = await window.electron.invoke("ask-llama", prompt);
+          console.log("🟢 AI Response:", response);
+          document.getElementById("response").innerText = response;
+        } catch (err) {
+          console.error("❌ Error:", err);
+          document.getElementById("response").innerText =
+            "Error getting response.";
+        }
+      }
+    </script>
+  </body>
+</html>
