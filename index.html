@@ -17,12 +17,11 @@
     <script>
       async function askLlama() {
         const prompt = document.getElementById("prompt").value;
-        document.getElementById("response").innerText = "Thinking..."; // Show loading text
+        document.getElementById("response").innerText = "Thinking..."; // Show loading
 
         try {
-          // ✅ FIXED: Use `window.electron.invoke`
           const response = await window.electron.invoke("ask-llama", prompt);
-          console.log("🟢 AI Response:", response);
+          console.log("🟢 AI Response:", response); // Debugging log
           document.getElementById("response").innerText = response;
         } catch (err) {
           console.error("❌ Error:", err);
